@@ -65,3 +65,392 @@ That's it! The Docker instance will help you get up and running quickly while al
 ## Questions
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+
+# Harbor Lutheran Church Resource Management System
+
+港湾路德教会资源管理系统
+
+## Project Introduction
+
+This is a church resource management system based on Payload CMS, specifically designed for Harbor Lutheran Church, for managing sermons, audio, video, ministry plans, news announcements, and meeting minutes.
+
+## Features
+
+### 🎯 Core Features
+
+- **Sermon Management**: Record sermon information, scriptures, summaries, etc.
+- **Audio Resources**: Manage sermon audio file links
+- **Video Resources**: Manage sermon video file links
+- **Pastor Management**: Manage pastor information and avatars
+- **Series Management**: Organize sermon series
+- **Media Management**: Manage images and other media resources
+- **Ministry Plans**: Manage church ministry plans
+- **Church News**: Publish church announcements and news
+- **Meeting Minutes**: Record and manage meeting minutes
+
+### 🔍 Search Features
+
+- Search by sermon title
+- Filter by speaker
+- Filter by series
+- Search by date range
+- Search by tags
+- Filter by ministry category
+- Filter by news category
+
+### 📱 User Interface
+
+- Responsive design, supports mobile and desktop
+- Modern admin panel
+- Intuitive resource display pages
+
+## Technical Architecture
+
+### Backend Technology
+
+- **Payload CMS 3.0**: Content management system
+- **MongoDB**: Database
+- **Next.js 15**: Full-stack framework
+- **TypeScript**: Type safety
+
+### File Storage Strategy
+
+- **Cloud Storage**: Audio, video, and image files stored in cloud space
+- **Database**: Only stores file links and metadata
+- **CDN**: Supports CDN acceleration
+
+### Supported Cloud Storage
+
+- Alibaba Cloud OSS
+- Tencent Cloud COS
+- AWS S3
+- Qiniu Cloud
+
+## Quick Start
+
+### Requirements
+
+- Node.js 18.20.2 or higher
+- MongoDB database
+- Cloud storage service account
+
+### Installation Steps
+
+1. **Clone Project**
+
+```bash
+git clone <repository-url>
+cd payload-cms-harbor-lutheran
+```
+
+2. **Install Dependencies**
+
+```bash
+npm install
+```
+
+3. **Configure Environment Variables**
+   Create `.env` file:
+
+```env
+# MongoDB Connection String
+DATABASE_URI=mongodb://your-mongodb-connection-string
+
+# Payload CMS Secret
+PAYLOAD_SECRET=your-secret-key-here
+
+# Cloud Storage Configuration
+CLOUD_STORAGE_REGION=cn-hangzhou
+CLOUD_STORAGE_BUCKET=your-bucket-name
+CLOUD_STORAGE_ACCESS_KEY_ID=your-access-key-id
+CLOUD_STORAGE_ACCESS_KEY_SECRET=your-access-key-secret
+CLOUD_STORAGE_DOMAIN=your-cdn-domain.com
+
+# Other Configuration
+NODE_ENV=development
+```
+
+4. **Start Development Server**
+
+```bash
+npm run dev
+```
+
+5. **Access System**
+
+- Frontend: http://localhost:3000
+- Admin Panel: http://localhost:3000/admin
+
+## User Guide
+
+### Administrator Operations
+
+#### 1. Pastor Management
+
+- Go to Admin Panel → Pastors
+- Click "New" to add pastor information
+- Upload avatar to cloud storage and enter link
+
+#### 2. Sermon Series Management
+
+- Go to Admin Panel → Series
+- Create new sermon series
+- Set series title, description, time range
+
+#### 3. Sermon Management
+
+- Go to Admin Panel → Sermons
+- Fill in sermon title, speaker, scripture, etc.
+- Select associated series
+- Set sermon status
+
+#### 4. Audio/Video Management
+
+- Upload files to cloud storage
+- Go to Admin Panel → Audio Resources/Video Resources
+- Enter file links and related information
+- Associate with corresponding sermon
+
+#### 5. Ministry Plan Management
+
+- Go to Admin Panel → Ministry Plans
+- Create new ministry plans
+- Set ministry category, time, leader
+- Add budget information and team members
+
+#### 6. News Management
+
+- Go to Admin Panel → Church News
+- Publish church announcements, event notices, etc.
+- Set news category and priority
+- Add related images and files
+
+#### 7. Meeting Minutes Management
+
+- Go to Admin Panel → Meeting Minutes
+- Record content of various meetings
+- Add meeting decisions and action items
+- Set next meeting arrangements
+
+### Congregation Usage
+
+#### 1. Browse Sermons
+
+- Visit homepage to view latest sermons
+- Use search function to find specific sermons
+- Filter by speaker or series
+
+#### 2. Listen/Watch
+
+- Click audio/video links
+- Support online playback and download
+
+#### 3. View Ministry Plans
+
+- Understand church ministry arrangements
+- View ministry progress status
+
+#### 4. Read News
+
+- Learn about latest church updates
+- View event notices and announcements
+
+## Data Model
+
+### Collection Structure
+
+```
+Users (Users)
+├── email
+└── auth fields
+
+Pastors (Pastors)
+├── name (Name)
+├── title (Title)
+├── email (Email)
+├── phone (Phone)
+├── bio (Biography)
+├── avatar (Avatar Link)
+└── isActive (Active Status)
+
+Series (Series)
+├── title (Series Title)
+├── description (Series Description)
+├── coverImage (Cover Image Link)
+├── startDate (Start Date)
+├── endDate (End Date)
+├── isActive (Active)
+└── tags (Tags)
+
+Sermons (Sermons)
+├── title (Sermon Title)
+├── subtitle (Subtitle)
+├── pastor (Speaker - Related to Pastors)
+├── series (Series - Related to Series)
+├── preachedDate (Preached Date)
+├── scripture (Scripture)
+├── summary (Summary)
+├── content (Content)
+├── status (Status)
+├── tags (Tags)
+└── notes (Notes)
+
+AudioResources (Audio Resources)
+├── title (Audio Title)
+├── sermon (Related Sermon)
+├── description (Description)
+├── audioUrl (Audio File Link)
+├── duration (Duration)
+├── fileSize (File Size)
+├── quality (Audio Quality)
+├── isPublic (Public Access)
+├── downloadUrl (Download Link)
+└── tags (Tags)
+
+VideoResources (Video Resources)
+├── title (Video Title)
+├── sermon (Related Sermon)
+├── description (Description)
+├── videoUrl (Video File Link)
+├── thumbnailUrl (Thumbnail Link)
+├── duration (Duration)
+├── fileSize (File Size)
+├── quality (Video Quality)
+├── isPublic (Public Access)
+├── youtubeUrl (YouTube Link)
+├── vimeoUrl (Vimeo Link)
+├── downloadUrl (Download Link)
+└── tags (Tags)
+
+Media (Media)
+├── title (Title)
+├── alt (Alt Text)
+├── url (Image Link)
+├── type (Image Type)
+├── description (Description)
+├── width (Width)
+├── height (Height)
+└── fileSize (File Size)
+
+MinistryPlans (Ministry Plans)
+├── title (Ministry Plan Title)
+├── ministry (Ministry Category)
+├── description (Ministry Description)
+├── objectives (Objectives & Plans)
+├── startDate (Start Date)
+├── endDate (End Date)
+├── status (Status)
+├── leader (Leader)
+├── team (Team Members)
+├── budget (Budget Information)
+├── location (Activity Location)
+├── attachments (Related Files)
+├── tags (Tags)
+└── isPublic (Public Display)
+
+ChurchNews (Church News)
+├── title (News Title)
+├── subtitle (Subtitle)
+├── category (News Category)
+├── content (News Content)
+├── summary (News Summary)
+├── author (Author)
+├── publishDate (Publish Date)
+├── status (Publish Status)
+├── featuredImage (Featured Image)
+├── images (Related Images)
+├── attachments (Related Files)
+├── priority (Priority)
+├── expiryDate (Expiry Date)
+├── tags (Tags)
+├── isPublic (Public Display)
+├── allowComments (Allow Comments)
+└── viewCount (View Count)
+
+MeetingMinutes (Meeting Minutes)
+├── title (Meeting Title)
+├── meetingType (Meeting Type)
+├── meetingDate (Meeting Date)
+├── startTime (Start Time)
+├── endTime (End Time)
+├── location (Meeting Location)
+├── attendees (Attendees)
+├── chairperson (Chairperson)
+├── secretary (Secretary)
+├── agenda (Meeting Agenda)
+├── minutes (Meeting Minutes)
+├── decisions (Meeting Decisions)
+├── actionItems (Action Items)
+├── nextMeeting (Next Meeting Arrangement)
+├── attachments (Related Files)
+├── status (Status)
+├── tags (Tags)
+├── isPublic (Public Display)
+└── confidential (Confidential Content)
+```
+
+## Deployment Guide
+
+### Production Environment Deployment
+
+1. **Build Project**
+
+```bash
+npm run build
+```
+
+2. **Start Production Server**
+
+```bash
+npm start
+```
+
+### Environment Variable Configuration
+
+Production environment needs to configure the following environment variables:
+
+```env
+# Database
+DATABASE_URI=mongodb://production-mongodb-connection-string
+
+# Security
+PAYLOAD_SECRET=production-secret-key
+
+# Cloud Storage
+CLOUD_STORAGE_REGION=cn-hangzhou
+CLOUD_STORAGE_BUCKET=production-bucket
+CLOUD_STORAGE_ACCESS_KEY_ID=production-access-key
+CLOUD_STORAGE_ACCESS_KEY_SECRET=production-secret
+CLOUD_STORAGE_DOMAIN=production-cdn-domain.com
+
+# Environment
+NODE_ENV=production
+```
+
+## Maintenance Recommendations
+
+### Database Maintenance
+
+- Regularly backup MongoDB data
+- Monitor database performance
+- Clean up unused data
+
+### File Storage Maintenance
+
+- Regularly check cloud storage file integrity
+- Monitor storage space usage
+- Set file access permissions
+
+### System Updates
+
+- Regularly update dependency packages
+- Monitor security vulnerabilities
+- Backup important data
+
+## Technical Support
+
+If you have any questions, please contact the system administrator or refer to the Payload CMS official documentation.
+
+## License
+
+MIT License

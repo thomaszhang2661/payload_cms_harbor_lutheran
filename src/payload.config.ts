@@ -9,6 +9,14 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Pastors } from './collections/Pastors'
+import { Series } from './collections/Series'
+import { Sermons } from './collections/Sermons'
+import { AudioResources } from './collections/AudioResources'
+import { VideoResources } from './collections/VideoResources'
+import { MinistryPlans } from './collections/MinistryPlans'
+import { ChurchNews } from './collections/ChurchNews'
+import { MeetingMinutes } from './collections/MeetingMinutes'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +28,18 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [
+    Users,
+    Media,
+    Pastors,
+    Series,
+    Sermons,
+    AudioResources,
+    VideoResources,
+    MinistryPlans,
+    ChurchNews,
+    MeetingMinutes,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -69,6 +69,14 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    pastors: Pastor;
+    series: Series;
+    sermons: Sermon;
+    'audio-resources': AudioResource;
+    'video-resources': VideoResource;
+    'ministry-plans': MinistryPlan;
+    'church-news': ChurchNew;
+    'meeting-minutes': MeetingMinute;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +85,14 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pastors: PastorsSelect<false> | PastorsSelect<true>;
+    series: SeriesSelect<false> | SeriesSelect<true>;
+    sermons: SermonsSelect<false> | SermonsSelect<true>;
+    'audio-resources': AudioResourcesSelect<false> | AudioResourcesSelect<true>;
+    'video-resources': VideoResourcesSelect<false> | VideoResourcesSelect<true>;
+    'ministry-plans': MinistryPlansSelect<false> | MinistryPlansSelect<true>;
+    'church-news': ChurchNewsSelect<false> | ChurchNewsSelect<true>;
+    'meeting-minutes': MeetingMinutesSelect<false> | MeetingMinutesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -143,18 +159,445 @@ export interface User {
  */
 export interface Media {
   id: string;
+  title: string;
+  /**
+   * Alternative text for accessibility
+   */
   alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
+  /**
+   * Image link in cloud storage (e.g., Alibaba Cloud OSS, Tencent Cloud COS, etc.)
+   */
+  url: string;
+  type?: ('avatar' | 'cover' | 'thumbnail' | 'banner' | 'other') | null;
+  description?: string | null;
   width?: number | null;
   height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  /**
+   * e.g., 2.5MB
+   */
+  fileSize?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pastors".
+ */
+export interface Pastor {
+  id: string;
+  name: string;
+  /**
+   * e.g., Senior Pastor, Associate Pastor, Minister, etc.
+   */
+  title?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  bio?: string | null;
+  avatar?: (string | null) | Media;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "series".
+ */
+export interface Series {
+  id: string;
+  title: string;
+  description?: string | null;
+  coverImage?: (string | null) | Media;
+  startDate?: string | null;
+  endDate?: string | null;
+  isActive?: boolean | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sermons".
+ */
+export interface Sermon {
+  id: string;
+  title: string;
+  subtitle?: string | null;
+  pastor: string | Pastor;
+  series?: (string | null) | Series;
+  preachedDate: string;
+  /**
+   * e.g., John 3:16
+   */
+  scripture?: string | null;
+  summary?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  status?: ('draft' | 'published' | 'archived') | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audio-resources".
+ */
+export interface AudioResource {
+  id: string;
+  title: string;
+  sermon: string | Sermon;
+  description?: string | null;
+  /**
+   * Audio file link in cloud storage (e.g., Alibaba Cloud OSS, Tencent Cloud COS, etc.)
+   */
+  audioUrl: string;
+  /**
+   * e.g., 45:30
+   */
+  duration?: string | null;
+  /**
+   * e.g., 25.6MB
+   */
+  fileSize?: string | null;
+  quality?: ('64kbps' | '128kbps' | '320kbps') | null;
+  isPublic?: boolean | null;
+  /**
+   * External download link (optional)
+   */
+  downloadUrl?: string | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-resources".
+ */
+export interface VideoResource {
+  id: string;
+  title: string;
+  sermon: string | Sermon;
+  description?: string | null;
+  /**
+   * Video file link in cloud storage (e.g., Alibaba Cloud OSS, Tencent Cloud COS, etc.)
+   */
+  videoUrl: string;
+  /**
+   * Video thumbnail link (optional)
+   */
+  thumbnailUrl?: string | null;
+  /**
+   * e.g., 45:30
+   */
+  duration?: string | null;
+  /**
+   * e.g., 256MB
+   */
+  fileSize?: string | null;
+  quality?: ('480p' | '720p' | '1080p' | '4k') | null;
+  isPublic?: boolean | null;
+  /**
+   * YouTube video link (optional)
+   */
+  youtubeUrl?: string | null;
+  /**
+   * Vimeo video link (optional)
+   */
+  vimeoUrl?: string | null;
+  /**
+   * External download link (optional)
+   */
+  downloadUrl?: string | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ministry-plans".
+ */
+export interface MinistryPlan {
+  id: string;
+  title: string;
+  ministry:
+    | 'worship'
+    | 'children'
+    | 'youth'
+    | 'adult-education'
+    | 'mission'
+    | 'care'
+    | 'music'
+    | 'technical'
+    | 'finance'
+    | 'other';
+  description: string;
+  objectives?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  startDate: string;
+  endDate?: string | null;
+  status?: ('planning' | 'in-progress' | 'completed' | 'paused' | 'cancelled') | null;
+  leader?: (string | null) | Pastor;
+  team?:
+    | {
+        name?: string | null;
+        role?: string | null;
+        contact?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  budget?: {
+    /**
+     * Unit: Yuan
+     */
+    amount?: number | null;
+    currency?: ('CNY' | 'USD') | null;
+    notes?: string | null;
+  };
+  location?: string | null;
+  attachments?:
+    | {
+        title?: string | null;
+        url?: string | null;
+        type?: ('document' | 'spreadsheet' | 'presentation' | 'other') | null;
+        id?: string | null;
+      }[]
+    | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  isPublic?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "church-news".
+ */
+export interface ChurchNew {
+  id: string;
+  title: string;
+  subtitle?: string | null;
+  category: 'announcement' | 'event' | 'ministry' | 'testimony' | 'history' | 'prayer' | 'other';
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Brief summary for list page display
+   */
+  summary?: string | null;
+  author?: (string | null) | Pastor;
+  publishDate: string;
+  status?: ('draft' | 'published' | 'archived') | null;
+  featuredImage?: (string | null) | Media;
+  images?:
+    | {
+        image?: (string | null) | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  attachments?:
+    | {
+        title?: string | null;
+        url?: string | null;
+        type?: ('document' | 'image' | 'video' | 'audio' | 'other') | null;
+        id?: string | null;
+      }[]
+    | null;
+  priority?: ('normal' | 'important' | 'urgent') | null;
+  /**
+   * Date when news will be automatically unpublished (optional)
+   */
+  expiryDate?: string | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  isPublic?: boolean | null;
+  allowComments?: boolean | null;
+  viewCount?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "meeting-minutes".
+ */
+export interface MeetingMinute {
+  id: string;
+  title: string;
+  meetingType:
+    | 'deacon-board'
+    | 'staff-meeting'
+    | 'ministry-meeting'
+    | 'finance-meeting'
+    | 'congregation-meeting'
+    | 'prayer-meeting'
+    | 'training-meeting'
+    | 'other';
+  meetingDate: string;
+  /**
+   * e.g., 14:00
+   */
+  startTime?: string | null;
+  /**
+   * e.g., 16:00
+   */
+  endTime?: string | null;
+  location?: string | null;
+  attendees?:
+    | {
+        name?: string | null;
+        role?: string | null;
+        present?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  chairperson?: (string | null) | Pastor;
+  secretary?: (string | null) | Pastor;
+  agenda?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  minutes: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  decisions?:
+    | {
+        decision?: string | null;
+        responsible?: string | null;
+        deadline?: string | null;
+        status?: ('pending' | 'in-progress' | 'completed' | 'cancelled') | null;
+        id?: string | null;
+      }[]
+    | null;
+  actionItems?:
+    | {
+        item?: string | null;
+        assignedTo?: string | null;
+        dueDate?: string | null;
+        priority?: ('low' | 'medium' | 'high' | 'urgent') | null;
+        status?: ('pending' | 'in-progress' | 'completed' | 'cancelled') | null;
+        id?: string | null;
+      }[]
+    | null;
+  nextMeeting?: {
+    date?: string | null;
+    time?: string | null;
+    location?: string | null;
+    agenda?: string | null;
+  };
+  attachments?:
+    | {
+        title?: string | null;
+        url?: string | null;
+        type?: ('minutes' | 'agenda' | 'report' | 'other') | null;
+        id?: string | null;
+      }[]
+    | null;
+  status?: ('draft' | 'confirmed' | 'published' | 'archived') | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Meeting minutes are usually not public, for internal viewing only
+   */
+  isPublic?: boolean | null;
+  /**
+   * Mark as confidential content, requires special permissions to view
+   */
+  confidential?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -170,6 +613,38 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'pastors';
+        value: string | Pastor;
+      } | null)
+    | ({
+        relationTo: 'series';
+        value: string | Series;
+      } | null)
+    | ({
+        relationTo: 'sermons';
+        value: string | Sermon;
+      } | null)
+    | ({
+        relationTo: 'audio-resources';
+        value: string | AudioResource;
+      } | null)
+    | ({
+        relationTo: 'video-resources';
+        value: string | VideoResource;
+      } | null)
+    | ({
+        relationTo: 'ministry-plans';
+        value: string | MinistryPlan;
+      } | null)
+    | ({
+        relationTo: 'church-news';
+        value: string | ChurchNew;
+      } | null)
+    | ({
+        relationTo: 'meeting-minutes';
+        value: string | MeetingMinute;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -240,18 +715,284 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  title?: T;
   alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
   url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
+  type?: T;
+  description?: T;
   width?: T;
   height?: T;
-  focalX?: T;
-  focalY?: T;
+  fileSize?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pastors_select".
+ */
+export interface PastorsSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  email?: T;
+  phone?: T;
+  bio?: T;
+  avatar?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "series_select".
+ */
+export interface SeriesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  coverImage?: T;
+  startDate?: T;
+  endDate?: T;
+  isActive?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sermons_select".
+ */
+export interface SermonsSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  pastor?: T;
+  series?: T;
+  preachedDate?: T;
+  scripture?: T;
+  summary?: T;
+  content?: T;
+  status?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audio-resources_select".
+ */
+export interface AudioResourcesSelect<T extends boolean = true> {
+  title?: T;
+  sermon?: T;
+  description?: T;
+  audioUrl?: T;
+  duration?: T;
+  fileSize?: T;
+  quality?: T;
+  isPublic?: T;
+  downloadUrl?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-resources_select".
+ */
+export interface VideoResourcesSelect<T extends boolean = true> {
+  title?: T;
+  sermon?: T;
+  description?: T;
+  videoUrl?: T;
+  thumbnailUrl?: T;
+  duration?: T;
+  fileSize?: T;
+  quality?: T;
+  isPublic?: T;
+  youtubeUrl?: T;
+  vimeoUrl?: T;
+  downloadUrl?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ministry-plans_select".
+ */
+export interface MinistryPlansSelect<T extends boolean = true> {
+  title?: T;
+  ministry?: T;
+  description?: T;
+  objectives?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  leader?: T;
+  team?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        contact?: T;
+        id?: T;
+      };
+  budget?:
+    | T
+    | {
+        amount?: T;
+        currency?: T;
+        notes?: T;
+      };
+  location?: T;
+  attachments?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        type?: T;
+        id?: T;
+      };
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  isPublic?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "church-news_select".
+ */
+export interface ChurchNewsSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  category?: T;
+  content?: T;
+  summary?: T;
+  author?: T;
+  publishDate?: T;
+  status?: T;
+  featuredImage?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  attachments?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        type?: T;
+        id?: T;
+      };
+  priority?: T;
+  expiryDate?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  isPublic?: T;
+  allowComments?: T;
+  viewCount?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "meeting-minutes_select".
+ */
+export interface MeetingMinutesSelect<T extends boolean = true> {
+  title?: T;
+  meetingType?: T;
+  meetingDate?: T;
+  startTime?: T;
+  endTime?: T;
+  location?: T;
+  attendees?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        present?: T;
+        id?: T;
+      };
+  chairperson?: T;
+  secretary?: T;
+  agenda?: T;
+  minutes?: T;
+  decisions?:
+    | T
+    | {
+        decision?: T;
+        responsible?: T;
+        deadline?: T;
+        status?: T;
+        id?: T;
+      };
+  actionItems?:
+    | T
+    | {
+        item?: T;
+        assignedTo?: T;
+        dueDate?: T;
+        priority?: T;
+        status?: T;
+        id?: T;
+      };
+  nextMeeting?:
+    | T
+    | {
+        date?: T;
+        time?: T;
+        location?: T;
+        agenda?: T;
+      };
+  attachments?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        type?: T;
+        id?: T;
+      };
+  status?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  isPublic?: T;
+  confidential?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

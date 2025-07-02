@@ -3,41 +3,41 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Harbor Lutheran Church</h1>
-              <p className="text-gray-600">港湾路德教会</p>
-            </div>
-            <Link
-              href="/admin"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-            >
-              Admin Panel
-            </Link>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-blue-600 to-indigo-600 py-12 mb-8 shadow-lg">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">
+            Harbor Lutheran Church
+          </h1>
+          <p className="text-lg md:text-xl text-blue-100 mb-4">
+            港湾路德教会 Resource Management System
+          </p>
+          <Link
+            href="/admin"
+            className="inline-block bg-white text-blue-700 font-semibold px-6 py-2 rounded-full shadow hover:bg-blue-100 hover:text-blue-900 transition-colors"
+          >
+            Admin Panel
+          </Link>
         </div>
-      </header>
+      </section>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search Section */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div className="bg-white/80 rounded-xl shadow-md p-6 mb-10 border border-blue-100">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">Search Resources</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
               type="text"
               placeholder="Search sermon titles, scriptures, or content..."
-              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <select className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
               <option value="">Select Speaker</option>
               <option value="all">All Speakers</option>
             </select>
-            <select className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
               <option value="">Select Series</option>
               <option value="all">All Series</option>
             </select>
@@ -45,15 +45,15 @@ export default function HomePage() {
         </div>
 
         {/* Quick Access Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           <Link
             href="/sermons"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-blue-100 group"
           >
             <div className="text-center">
-              <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-7 h-7 text-blue-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -73,12 +73,12 @@ export default function HomePage() {
 
           <Link
             href="/audio"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-green-100 group"
           >
             <div className="text-center">
-              <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-green-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-green-600"
+                  className="w-7 h-7 text-green-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -98,12 +98,12 @@ export default function HomePage() {
 
           <Link
             href="/video"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-red-100 group"
           >
             <div className="text-center">
-              <div className="bg-red-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-red-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-red-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-red-600"
+                  className="w-7 h-7 text-red-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -123,12 +123,12 @@ export default function HomePage() {
 
           <Link
             href="/series"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-purple-100 group"
           >
             <div className="text-center">
-              <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-purple-600"
+                  className="w-7 h-7 text-purple-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -148,15 +148,15 @@ export default function HomePage() {
         </div>
 
         {/* Church Management Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
           <Link
             href="/ministry-plans"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-indigo-100 group"
           >
             <div className="text-center">
-              <div className="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-indigo-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-indigo-600"
+                  className="w-7 h-7 text-indigo-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -176,12 +176,12 @@ export default function HomePage() {
 
           <Link
             href="/news"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-yellow-100 group"
           >
             <div className="text-center">
-              <div className="bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-yellow-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-yellow-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-yellow-600"
+                  className="w-7 h-7 text-yellow-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -201,12 +201,12 @@ export default function HomePage() {
 
           <Link
             href="/meetings"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow border border-teal-100 group"
           >
             <div className="text-center">
-              <div className="bg-teal-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-teal-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-teal-200 transition-colors">
                 <svg
-                  className="w-6 h-6 text-teal-600"
+                  className="w-7 h-7 text-teal-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -226,9 +226,9 @@ export default function HomePage() {
         </div>
 
         {/* Recent Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Recent Sermons */}
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white/90 rounded-xl shadow-md p-6 border border-blue-100">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Latest Sermons</h2>
             <div className="space-y-4">
               <div className="border-b border-gray-200 pb-4">
@@ -264,7 +264,7 @@ export default function HomePage() {
           </div>
 
           {/* Recent News */}
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white/90 rounded-xl shadow-md p-6 border border-yellow-100">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Latest Updates</h2>
             <div className="space-y-4">
               <div className="border-b border-gray-200 pb-4">
@@ -307,10 +307,10 @@ export default function HomePage() {
                   <span className="text-gray-500 text-sm">Jan 16, 2024</span>
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">
-                  New Children's Sunday School Curriculum
+                  New Children&#39;s Sunday School Curriculum
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Children's Sunday School will begin a new curriculum system to help children
+                  Children&#39;s Sunday School will begin a new curriculum system to help children
                   better learn the Bible...
                 </p>
               </div>

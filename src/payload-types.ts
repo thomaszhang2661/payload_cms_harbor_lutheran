@@ -98,7 +98,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
   globalsSelect: {};
@@ -134,7 +134,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -158,7 +158,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   title: string;
   /**
    * Alternative text for accessibility
@@ -184,7 +184,7 @@ export interface Media {
  * via the `definition` "pastors".
  */
 export interface Pastor {
-  id: string;
+  id: number;
   name: string;
   /**
    * e.g., Senior Pastor, Associate Pastor, Minister, etc.
@@ -193,7 +193,7 @@ export interface Pastor {
   email?: string | null;
   phone?: string | null;
   bio?: string | null;
-  avatar?: (string | null) | Media;
+  avatar?: (number | null) | Media;
   isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -203,10 +203,10 @@ export interface Pastor {
  * via the `definition` "series".
  */
 export interface Series {
-  id: string;
+  id: number;
   title: string;
   description?: string | null;
-  coverImage?: (string | null) | Media;
+  coverImage?: (number | null) | Media;
   startDate?: string | null;
   endDate?: string | null;
   isActive?: boolean | null;
@@ -224,11 +224,11 @@ export interface Series {
  * via the `definition` "sermons".
  */
 export interface Sermon {
-  id: string;
+  id: number;
   title: string;
   subtitle?: string | null;
-  pastor: string | Pastor;
-  series?: (string | null) | Series;
+  pastor: number | Pastor;
+  series?: (number | null) | Series;
   preachedDate: string;
   /**
    * e.g., John 3:16
@@ -266,9 +266,9 @@ export interface Sermon {
  * via the `definition` "audio-resources".
  */
 export interface AudioResource {
-  id: string;
+  id: number;
   title: string;
-  sermon: string | Sermon;
+  sermon: number | Sermon;
   description?: string | null;
   /**
    * Audio file link in cloud storage (e.g., Alibaba Cloud OSS, Tencent Cloud COS, etc.)
@@ -302,9 +302,9 @@ export interface AudioResource {
  * via the `definition` "video-resources".
  */
 export interface VideoResource {
-  id: string;
+  id: number;
   title: string;
-  sermon: string | Sermon;
+  sermon: number | Sermon;
   description?: string | null;
   /**
    * Video file link in cloud storage (e.g., Alibaba Cloud OSS, Tencent Cloud COS, etc.)
@@ -350,7 +350,7 @@ export interface VideoResource {
  * via the `definition` "ministry-plans".
  */
 export interface MinistryPlan {
-  id: string;
+  id: number;
   title: string;
   ministry:
     | 'worship'
@@ -382,7 +382,7 @@ export interface MinistryPlan {
   startDate: string;
   endDate?: string | null;
   status?: ('planning' | 'in-progress' | 'completed' | 'paused' | 'cancelled') | null;
-  leader?: (string | null) | Pastor;
+  leader?: (number | null) | Pastor;
   team?:
     | {
         name?: string | null;
@@ -423,7 +423,7 @@ export interface MinistryPlan {
  * via the `definition` "church-news".
  */
 export interface ChurchNew {
-  id: string;
+  id: number;
   title: string;
   subtitle?: string | null;
   category: 'announcement' | 'event' | 'ministry' | 'testimony' | 'history' | 'prayer' | 'other';
@@ -446,13 +446,13 @@ export interface ChurchNew {
    * Brief summary for list page display
    */
   summary?: string | null;
-  author?: (string | null) | Pastor;
+  author?: (number | null) | Pastor;
   publishDate: string;
   status?: ('draft' | 'published' | 'archived') | null;
-  featuredImage?: (string | null) | Media;
+  featuredImage?: (number | null) | Media;
   images?:
     | {
-        image?: (string | null) | Media;
+        image?: (number | null) | Media;
         caption?: string | null;
         id?: string | null;
       }[]
@@ -487,7 +487,7 @@ export interface ChurchNew {
  * via the `definition` "meeting-minutes".
  */
 export interface MeetingMinute {
-  id: string;
+  id: number;
   title: string;
   meetingType:
     | 'deacon-board'
@@ -516,8 +516,8 @@ export interface MeetingMinute {
         id?: string | null;
       }[]
     | null;
-  chairperson?: (string | null) | Pastor;
-  secretary?: (string | null) | Pastor;
+  chairperson?: (number | null) | Pastor;
+  secretary?: (number | null) | Pastor;
   agenda?: {
     root: {
       type: string;
@@ -604,52 +604,52 @@ export interface MeetingMinute {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'pastors';
-        value: string | Pastor;
+        value: number | Pastor;
       } | null)
     | ({
         relationTo: 'series';
-        value: string | Series;
+        value: number | Series;
       } | null)
     | ({
         relationTo: 'sermons';
-        value: string | Sermon;
+        value: number | Sermon;
       } | null)
     | ({
         relationTo: 'audio-resources';
-        value: string | AudioResource;
+        value: number | AudioResource;
       } | null)
     | ({
         relationTo: 'video-resources';
-        value: string | VideoResource;
+        value: number | VideoResource;
       } | null)
     | ({
         relationTo: 'ministry-plans';
-        value: string | MinistryPlan;
+        value: number | MinistryPlan;
       } | null)
     | ({
         relationTo: 'church-news';
-        value: string | ChurchNew;
+        value: number | ChurchNew;
       } | null)
     | ({
         relationTo: 'meeting-minutes';
-        value: string | MeetingMinute;
+        value: number | MeetingMinute;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -659,10 +659,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -682,7 +682,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;

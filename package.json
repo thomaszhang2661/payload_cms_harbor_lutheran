@@ -15,10 +15,20 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "migrate:to-postgres": "node scripts/migrate-to-postgres.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose restart",
+    "docker:logs": "docker-compose logs -f db",
+    "docker:clean": "docker-compose down -v && rm -rf postgres",
+    "docker:test": "node scripts/test-docker-config.js",
+    "docker:fix": "./scripts/fix-docker-issues.sh",
+    "db:test": "node scripts/test-database-connection.js"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.44.0",
+    "@payloadcms/db-postgres": "^3.50.0",
     "@payloadcms/next": "3.44.0",
     "@payloadcms/payload-cloud": "3.44.0",
     "@payloadcms/richtext-lexical": "3.44.0",
@@ -26,8 +36,10 @@
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
+    "mongodb": "^6.18.0",
     "next": "15.3.2",
     "payload": "3.44.0",
+    "pg": "^8.16.3",
     "react": "19.1.0",
     "react-dom": "^19.1.0",
     "sharp": "0.32.6"

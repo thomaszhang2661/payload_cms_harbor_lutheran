@@ -131,10 +131,46 @@ This is a church resource management system based on Payload CMS, specifically d
 ### Requirements
 
 - Node.js 18.20.2 or higher
-- MongoDB database
+- Docker (推荐) 或 PostgreSQL 数据库
 - Cloud storage service account
 
-### Installation Steps
+### 使用 Docker (推荐)
+
+1. **启动数据库服务**
+
+```bash
+npm run docker:up
+```
+
+2. **配置环境变量**
+   创建 `.env` 文件：
+
+```env
+# Docker PostgreSQL 数据库配置
+DATABASE_URI=postgresql://cms:Sun4Love@localhost:3017/cms
+
+# Payload CMS 配置
+PAYLOAD_SECRET=your-secret-key-here
+
+# 云存储配置
+CLOUD_STORAGE_REGION=cn-hangzhou
+CLOUD_STORAGE_BUCKET=your-bucket-name
+CLOUD_STORAGE_ACCESS_KEY_ID=your-access-key-id
+CLOUD_STORAGE_ACCESS_KEY_SECRET=your-access-key-secret
+CLOUD_STORAGE_DOMAIN=your-cdn-domain.com
+
+# 其他配置
+NODE_ENV=development
+NODE_OPTIONS="--no-deprecation"
+```
+
+3. **启动开发服务器**
+
+```bash
+npm run dev
+```
+
+### 使用本地 PostgreSQL
 
 1. **Clone Project**
 
@@ -153,8 +189,8 @@ npm install
    Create `.env` file:
 
 ```env
-# MongoDB Connection String
-DATABASE_URI=mongodb://your-mongodb-connection-string
+# PostgreSQL Connection String
+DATABASE_URI=postgresql://username:password@localhost:5432/harbor_lutheran_db
 
 # Payload CMS Secret
 PAYLOAD_SECRET=your-secret-key-here
@@ -411,7 +447,7 @@ Production environment needs to configure the following environment variables:
 
 ```env
 # Database
-DATABASE_URI=mongodb://production-mongodb-connection-string
+DATABASE_URI=postgresql://username:password@production-host:5432/harbor_lutheran_db
 
 # Security
 PAYLOAD_SECRET=production-secret-key

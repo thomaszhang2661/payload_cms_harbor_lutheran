@@ -66,36 +66,36 @@ That's it! The Docker instance will help you get up and running quickly while al
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
 
-# Harbor Lutheran Church Resource Management System
+# Multimedia Content Management System
 
-港湾路德教会资源管理系统
+多媒体内容管理系统（基于 Next.js + Payload CMS）
 
 ## Project Introduction
 
-This is a church resource management system based on Payload CMS, specifically designed for Harbor Lutheran Church, for managing sermons, audio, video, ministry plans, news announcements, and meeting minutes.
+This is a multimedia content management system based on Payload CMS and Next.js. It supports structured content modeling, audio/video resource management, project/plan tracking, announcements/news publishing, and meeting minutes, with both an admin panel and a public-facing site.
 
 ## Features
 
 ### 🎯 Core Features
 
-- **Sermon Management**: Record sermon information, scriptures, summaries, etc.
-- **Audio Resources**: Manage sermon audio file links
-- **Video Resources**: Manage sermon video file links
-- **Pastor Management**: Manage pastor information and avatars
-- **Series Management**: Organize sermon series
-- **Media Management**: Manage images and other media resources
-- **Ministry Plans**: Manage church ministry plans
-- **Church News**: Publish church announcements and news
+- **Content Management**: Record content information, references, summaries, tags, etc.
+- **Audio Resources**: Manage audio links and metadata
+- **Video Resources**: Manage video links, thumbnails, and metadata
+- **Speaker/Author Management**: Maintain speaker/author profiles and avatars
+- **Series Management**: Organize content into themed series
+- **Media Library**: Manage images and other media assets
+- **Project Plans**: Manage organizational project/plan records
+- **News/Announcements**: Publish platform announcements and news
 - **Meeting Minutes**: Record and manage meeting minutes
 
 ### 🔍 Search Features
 
-- Search by sermon title
-- Filter by speaker
+- Search by content title
+- Filter by speaker/author
 - Filter by series
 - Search by date range
 - Search by tags
-- Filter by ministry category
+- Filter by project category
 - Filter by news category
 
 ### 📱 User Interface
@@ -108,8 +108,8 @@ This is a church resource management system based on Payload CMS, specifically d
 
 ### Backend Technology
 
-- **Payload CMS 3.0**: Content management system
-- **MongoDB**: Database
+- **Payload CMS 3**: Content management system
+- **PostgreSQL**: Primary database (Docker local and production connection)
 - **Next.js 15**: Full-stack framework
 - **TypeScript**: Type safety
 
@@ -131,7 +131,7 @@ This is a church resource management system based on Payload CMS, specifically d
 ### Requirements
 
 - Node.js 18.20.2 or higher
-- Docker (推荐) 或 PostgreSQL 数据库
+- Docker（推荐）或 PostgreSQL 数据库
 - Cloud storage service account
 
 ### 使用 Docker (推荐)
@@ -221,24 +221,24 @@ npm run dev
 
 ### Administrator Operations
 
-#### 1. Pastor Management
+#### 1. Speaker/Author Management
 
-- Go to Admin Panel → Pastors
-- Click "New" to add pastor information
+- Go to Admin Panel → Speakers
+- Click "New" to add speaker/author information
 - Upload avatar to cloud storage and enter link
 
-#### 2. Sermon Series Management
+#### 2. Series Management
 
 - Go to Admin Panel → Series
-- Create new sermon series
+- Create new series
 - Set series title, description, time range
 
-#### 3. Sermon Management
+#### 3. Content Management
 
-- Go to Admin Panel → Sermons
-- Fill in sermon title, speaker, scripture, etc.
+- Go to Admin Panel → Contents
+- Fill in title, speaker/author, references, etc.
 - Select associated series
-- Set sermon status
+- Set content status
 
 #### 4. Audio/Video Management
 
@@ -247,17 +247,17 @@ npm run dev
 - Enter file links and related information
 - Associate with corresponding sermon
 
-#### 5. Ministry Plan Management
+#### 5. Project Plan Management
 
-- Go to Admin Panel → Ministry Plans
-- Create new ministry plans
-- Set ministry category, time, leader
+- Go to Admin Panel → Project Plans
+- Create new project plans
+- Set project category, time, leader
 - Add budget information and team members
 
 #### 6. News Management
 
-- Go to Admin Panel → Church News
-- Publish church announcements, event notices, etc.
+- Go to Admin Panel → News
+- Publish announcements, event notices, etc.
 - Set news category and priority
 - Add related images and files
 
@@ -268,27 +268,27 @@ npm run dev
 - Add meeting decisions and action items
 - Set next meeting arrangements
 
-### Congregation Usage
+### End-User Usage
 
-#### 1. Browse Sermons
+#### 1. Browse Content
 
-- Visit homepage to view latest sermons
-- Use search function to find specific sermons
-- Filter by speaker or series
+- Visit homepage to view latest content
+- Use search to locate specific content
+- Filter by speaker/author or series
 
 #### 2. Listen/Watch
 
 - Click audio/video links
 - Support online playback and download
 
-#### 3. View Ministry Plans
+#### 3. View Project Plans
 
-- Understand church ministry arrangements
-- View ministry progress status
+- Understand organizational project arrangements
+- View progress status
 
 #### 4. Read News
 
-- Learn about latest church updates
+- Learn about latest platform updates
 - View event notices and announcements
 
 ## Data Model
@@ -300,7 +300,7 @@ Users (Users)
 ├── email
 └── auth fields
 
-Pastors (Pastors)
+Speakers (Speakers)
 ├── name (Name)
 ├── title (Title)
 ├── email (Email)
@@ -318,13 +318,13 @@ Series (Series)
 ├── isActive (Active)
 └── tags (Tags)
 
-Sermons (Sermons)
-├── title (Sermon Title)
+Contents (Contents)
+├── title (Content Title)
 ├── subtitle (Subtitle)
-├── pastor (Speaker - Related to Pastors)
+├── speaker (Speaker/Author - Related to Speakers)
 ├── series (Series - Related to Series)
-├── preachedDate (Preached Date)
-├── scripture (Scripture)
+├── publishedDate (Published Date)
+├── references (References)
 ├── summary (Summary)
 ├── content (Content)
 ├── status (Status)
@@ -368,9 +368,9 @@ Media (Media)
 ├── height (Height)
 └── fileSize (File Size)
 
-MinistryPlans (Ministry Plans)
-├── title (Ministry Plan Title)
-├── ministry (Ministry Category)
+ProjectPlans (Project Plans)
+├── title (Project Plan Title)
+├── project (Project Category)
 ├── description (Ministry Description)
 ├── objectives (Objectives & Plans)
 ├── startDate (Start Date)
@@ -384,7 +384,7 @@ MinistryPlans (Ministry Plans)
 ├── tags (Tags)
 └── isPublic (Public Display)
 
-ChurchNews (Church News)
+News (News)
 ├── title (News Title)
 ├── subtitle (Subtitle)
 ├── category (News Category)
@@ -467,7 +467,7 @@ NODE_ENV=production
 
 ### Database Maintenance
 
-- Regularly backup MongoDB data
+- Regularly backup PostgreSQL data
 - Monitor database performance
 - Clean up unused data
 
